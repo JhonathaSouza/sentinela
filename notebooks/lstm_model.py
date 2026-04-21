@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import pickle  # <-- Biblioteca adicionada para salvar o Tokenizer
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
 from sklearn.utils.class_weight import compute_class_weight
@@ -62,3 +63,18 @@ print("\n" + "="*50)
 print("🧠 RESULTADOS DO MODELO LSTM")
 print("="*50)
 print(classification_report(y_test, y_pred, target_names=['Normal', 'Predador']))
+
+# ==========================================
+# PARTE NOVA: CONGELANDO E SALVANDO O MODELO
+# ==========================================
+print("\n8. Salvando o 'Cérebro' do Modelo e o Tokenizer...")
+
+# Salva a arquitetura e os pesos da Rede Neural treinada
+model.save('../data/processed/sentinela_lstm.keras')
+
+# Salva o dicionário de palavras (crucial para o modelo entender novas frases depois)
+with open('../data/processed/tokenizer.pickle', 'wb') as handle:
+    pickle.dump(tokenizer, handle, protocol=pickle.HIGHEST_PROTOCOL)
+
+print("-> Sucesso! Modelo (.keras) e Tokenizer (.pickle) salvos na pasta 'processed'.")
+print("O Sentinela está pronto para ser integrado à API!")
