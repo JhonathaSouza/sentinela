@@ -9,35 +9,43 @@
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-8">
+                
                 <div class="card shadow-sm mb-4">
                     <div class="card-body text-center bg-dark text-white rounded">
                         <h2>🛡️ Sistema Sentinela</h2>
                         <p class="mb-0">Análise de Risco em Chats usando Rede Neural LSTM</p>
                     </div>
                 </div>
+
                 <div class="card shadow-sm mb-4">
                     <div class="card-body">
                         <form method="POST">
                             {% csrf_token %}
                             <div class="mb-3">
-                                <label class="form-label fw-bold">Cole o trecho da conversa (em inglês):</label>
-                                <textarea class="form-control" name="texto_chat" rows="4" required placeholder="Ex: Hi! How are you today?"></textarea>
+                                <label class="form-label fw-bold">Cole o trecho da conversa:</label>
+                                <textarea class="form-control" name="texto_chat" rows="4" required placeholder="Ex: Oi! Tudo bem? O que você está fazendo?"></textarea>
                             </div>
                             <button type="submit" class="btn btn-primary w-100 fw-bold">Analisar com IA</button>
                         </form>
                     </div>
                 </div>
+
                 {% if resultado %}
                 <div class="alert alert-{{ cor_alerta }} shadow-sm text-center">
                     <h4 class="alert-heading">{{ resultado.status }}</h4>
                     <hr>
-                    <p class="mb-1"><strong>Texto Analisado:</strong> "{{ resultado.original_text }}"</p>
-                    <p class="mb-0"><strong>Certeza do Modelo:</strong> {{ porcentagem }}%</p>
+                    <p class="mb-1"><strong>Você digitou:</strong> "{{ resultado.original_text }}"</p>
+                    <p class="mb-1 text-muted"><small><em>(Traduzido para a IA como: "{{ resultado.translated_text }}")</em></small></p>
+                    <p class="mb-0 mt-2"><strong>Certeza do Modelo:</strong> {{ porcentagem }}%
                 </div>
                 {% endif %}
+
                 {% if erro %}
-                <div class="alert alert-warning text-center">{{ erro }}</div>
+                <div class="alert alert-warning text-center">
+                    {{ erro }}
+                </div>
                 {% endif %}
+
             </div>
         </div>
     </div>
