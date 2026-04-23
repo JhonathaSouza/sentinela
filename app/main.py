@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 import tensorflow as tf
-from tensorflow.keras.preprocessing.sequence import pad_sequences
+pad_sequences = tf.keras.utils.pad_sequences
 import pickle
 import re
 import numpy as np
