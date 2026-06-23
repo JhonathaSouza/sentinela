@@ -8,15 +8,33 @@ import numpy as np
 import nltk
 from nltk.corpus import stopwords
 from deep_translator import GoogleTranslator  # <-- NOVA BIBLIOTECA AQUI
+import os
+import tensorflow as tf
+import pickle
 
+# Define o caminho base como a pasta do arquivo atual (app/)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+# Sobe um nível para chegar na raiz e entra na pasta data
+MODEL_PATH = os.path.join(BASE_DIR, '..', 'data', 'processed', 'sentinela_lstm.keras')
+TOKENIZER_PATH = os.path.join(BASE_DIR, '..', 'data', 'processed', 'tokenizer.pickle')
+
+print("Carregando o Cérebro do Sentinela...")
+model = tf.keras.models.load_model(MODEL_PATH)
+with open(TOKENIZER_PATH, 'rb') as handle:
+    tokenizer = pickle.load(handle)
+print("Modelo carregado com sucesso!")
 nltk.download('stopwords', quiet=True)
 stop_words = set(stopwords.words('english'))
 
 app = FastAPI(title="Sentinela API", description="API para detecção de grooming online via LSTM")
 
 print("Carregando o Cérebro do Sentinela...")
-model = tf.keras.models.load_model('data/processed/sentinela_lstm.keras')
-with open('data/processed/tokenizer.pickle', 'rb') as handle:
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+MODEL_PATH = os.path.join(BASE_DIR, 'data', 'processed', 'sentinela_lstm.keras')
+TOKENIZER_PATH = os.path.join(BASE_DIR, 'data', 'processed', 'tokenizer.pickle')
+
+model = tf.keras.models.load_model(MODEL_PATH)
+with open(TOKENIZER_PATH, 'rb') as handle:
     tokenizer = pickle.load(handle)
 print("Modelo carregado com sucesso!")
 
